@@ -1,0 +1,31 @@
+{
+  "name": "tabular",
+  "version": "0.1.0",
+  "description": "Flatten complex JSON objects and convert to csv, tab delimited, or html",
+  "main": "lib/tabular.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mfsnow/tabular.git"
+  },
+  "keywords": [
+    "json",
+    "csv",
+    "table",
+    "tab",
+    "converter",
+    "flatten"
+  ],
+  "devDependencies": {
+    "should": "*",
+    "mocha": "*"
+  },
+  "author": "Matt Snow",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mfsnow/tabular/issues"
+  },
+  "homepage": "https://github.com/mfsnow/tabular#readme"
+}
