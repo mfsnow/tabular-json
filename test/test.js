@@ -112,13 +112,15 @@
           name: "Jane",
           address: {
             city: "Tokyo"
-          }
+          }, emails: [
+            "jane@example.com"
+          ]
         }], {
           sort: ["name", "emails"]
         });
         res.should.deepEqual([
           ["name", "age", "emails", "address.city"],
-          ["Jane", null, null, "Tokyo"],
+          ["Jane", null, "jane@example.com", "Tokyo"],
           ["John", 35, "j.doe@example.com", null],
           ["John", 35, "john@example.com", null]
         ]);
@@ -231,7 +233,7 @@
     });
     describe("csv", function () {
       it("should return a string", function () {
-        var res = tabular.csv([{
+        var res = tabular.delimit([{
           name: "John",
           age: 35
         }, {
@@ -241,23 +243,37 @@
         res.should.be.exactly('"name","age"\n"John",35\n"Jane",30\n');
       });
       it("should double quotes when within a string", function () {
-        var res = tabular.csv({
+        var res = tabular.delimit({
           name: "John",
           quote: "\"Hello, world!\""
         });
         res.should.be.exactly('"name","quote"\n"John","""Hello, world!"""\n');
       });
-      it("should allow other string wraps", function () {
-        var res = tabular.csv({
+      it("should allow other string wraps, with custom escapes", function () {
+        var res = tabular.delimit({
           first: "John",
           last: "Mc'Coy"
         }, {
           stringWrap: "'"
         });
         res.should.be.exactly('\'first\',\'last\'\n\'John\',\'Mc\'\'Coy\'\n');
+        res = tabular.delimit({
+          first: "John",
+          last: "Mc'Coy"
+        }, {
+          stringWrap: "'", escape: '\\'
+        });
+        res.should.be.exactly('\'first\',\'last\'\n\'John\',\'Mc\\\'Coy\'\n');
+        res = tabular.delimit({
+          first: "John",
+          last: "Mc'Coy"
+        }, {
+          stringWrap: "'", escape: function(str, wrap) {return str.replace(/Mc\'/g, 'Mac');}
+        });
+        res.should.be.exactly('\'first\',\'last\'\n\'John\',\'MacCoy\'\n');
       });
       it("should allow other EOLs", function () {
-        var res = tabular.csv({
+        var res = tabular.delimit({
           first: "John",
           last: "McCoy"
         }, {
@@ -266,7 +282,7 @@
         res.should.be.exactly('"first","last"\t"John","McCoy"\t');
       });
       it("should allow other separators", function () {
-        var res = tabular.csv({
+        var res = tabular.delimit({
           first: "John",
           last: "McCoy"
         }, {
@@ -276,28 +292,23 @@
       });
       it("should format dates", function () {
         var date = new Date();
-        tabular.csv({
+        tabular.delimit({
           first: "John",
           createdAt: date
         }).should.be.exactly('"first","createdAt"\n"John",' + date.toLocaleDateString() + '\n');
         var formatter = function (date) {
           return date.getDate();
         };
-        tabular.csv({
+        tabular.delimit({
           first: "John",
           createdAt: date
         }, {
           dateFormatter: formatter
         }).should.be.exactly('"first","createdAt"\n"John",' + formatter(date) + '\n');
       });
-    });
-    describe("tab", function () {
-      it("should be just like csv, but be tabbed by default", function () {
-        var res = tabular.tab({
-          first: "John",
-          last: "McCoy"
-        });
-        res.should.be.exactly('"first"\t"last"\n"John"\t"McCoy"\n');
+      it("should remove carriage returns", function() {
+        var res = tabular.delimit({memo: "Memo\nwith multiple lines\non it."});
+        res.should.be.exactly('"memo"\n"Memo with multiple lines on it."\n');
       });
     });
     describe("html", function () {

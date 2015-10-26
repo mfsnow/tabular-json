@@ -5,7 +5,7 @@
 
   var customers = [
     {
-      name: "Acme Ltd",
+      name: "Acm\"e Ltd",
       address: {
         city: "Las Vegas",
         state: "Nevada"
@@ -39,6 +39,9 @@
 
   var arr = tabular.array(customers);
   console.log("Array", arr);
+  
+  var html = tabular.html(customers);
+  console.log(html);
 
   arr = tabular.array(customers, {headers: ["name", "orders.shipments.id"]});
   console.log("Array", arr);
@@ -48,4 +51,7 @@
 
   var flat = tabular.flatten(customers, {headers: ["name", "orders.shipments.id"]});
   console.log("Flat", flat);
+
+  var csv = tabular.delimit(customers);
+  console.log("csv", csv);
 })();
