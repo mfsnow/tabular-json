@@ -1,9 +1,14 @@
-# tabular
+# Tabular JSON
 This node module helps manipulate tabular data found in a JSON object. Data with sub-objects, including arrays, can be flattened, converted into an array, an HTML table, or a delimited string. Many options are available to customize each function.
+
+## Install
+```
+npm install tabular-json
+```
 
 ## Usage
 ```js
-var tabular = require('tabular');
+var tabular = require('tabular-json');
 ```
 
 ### Functions
