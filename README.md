@@ -296,44 +296,6 @@ The variable `result` contains the string:
 |Acme Ltd|Las Vegas|Nevada|SO2||2000-01-01||
 |Acme Ltd|Las Vegas|Nevada|SO1|INV1|||
 |Acme Ltd|Las Vegas|Nevada|SO1|INV2|||
-
 |Acme Ltd|Las Vegas|Nevada||||Jim|
 |Acme Ltd|Las Vegas|Nevada||||Johanna|
 |XYZ Inc|||||| |
-
-#### Sample object
-```js
-var obj = [
-  {
-    name: "Acme Ltd",
-    address: {
-      city: "Las Vegas",
-      state: "Nevada"
-    },
-    orders: [
-      {
-        id: "SO1",
-        shipments: [
-          {id: "INV1"}, {id: "INV2"}
-        ]
-      },
-      { id: "SO2", orderedAt: new Date()}
-    ],
-    contacts: [
-      "Jim",
-      "Johanna"
-    ]
-  }, {
-    name: "ABC Co",
-    address: {
-      city: "Las Angeles"
-    },
-    orders: [
-      {id: "SO3",
-    shipments: [{id: "INV3"}]}
-    ]
-  }, {
-    name: "XYZ Inc"
-  }
-];
-```
