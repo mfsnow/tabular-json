@@ -3,9 +3,52 @@
 
   var tabular = require('../lib/tabular');
 
+  var obj = [
+    {
+      Name: "Jane",
+      Age: 47,
+      Address: {
+        City: "Detroit",
+        State: "Michigan"
+      }
+    },
+    {
+      Name: "John",
+      Age: 35,
+      Address: {
+        City: "New York",
+        State: "New York"
+      }
+    },
+    {
+      Name: "Steve",
+      Age: 35,
+      Address: {
+        City: "Buffalo",
+        State: "New York"
+      }
+    }
+  ];
+
+  var opts = {
+    dot: ' / ',
+    headers: ["Name", "Age","Address / City"],
+    sort: ["-Age", "Address / City"] // Sort first by 'Age', oldest first, then by 'Address / City'
+  };
+
+  var result = tabular.flatten(obj, opts);
+  console.log("sult = tabular.flatten(obj, opts):\n", result, "\n");
+
+  opts = {
+    sort: "Name"
+  };
+
+  result = tabular.array(obj, opts);
+  console.log("tabular.array(obj, opts):\n", result, "\n");
+
   var customers = [
     {
-      name: "Acm\"e Ltd",
+      name: "Acme Ltd",
       address: {
         city: "Las Vegas",
         state: "Nevada"
@@ -17,7 +60,7 @@
             {id: "INV1"}, {id: "INV2"}
           ]
         },
-        { id: "SO2", orderedAt: new Date()}
+        { id: "SO2", orderedAt: new Date("January 1, 2000")}
       ],
       contacts: [
         "Jim",
@@ -37,21 +80,36 @@
     }
   ];
 
-  var arr = tabular.array(customers);
-  console.log("Array", arr);
-  
-  var html = tabular.html(customers);
-  console.log(html);
+  result = tabular.array(customers);
+  console.log("tabular.array(customers):\n", result, "\n");
 
-  arr = tabular.array(customers, {headers: ["name", "orders.shipments.id"]});
-  console.log("Array", arr);
+  obj = {
+    Name: "John",
+    Height: "6' \"2",
+    "Birth Day": new Date("June 12, 1994")
+  };
 
-  arr = tabular.array(customers, {headers: ["name", "orders.shipments.id"], sort: ["name", "-orders.shipments.id"]});
-  console.log("Array", arr);
+  opts = {
+    sort: "Name",
+    separator: ';',
+    stringWrap: "'",
+    escape: function(str, wrap) {return str.replace(new RegExp("("+wrap+")", "g"), '\\$1');},
+    dateFormatter: function(date) {return date.toISOString().substr(0,10);}
+  };
 
-  var flat = tabular.flatten(customers, {headers: ["name", "orders.shipments.id"]});
-  console.log("Flat", flat);
+  result = tabular.delimit(obj, opts);
+  console.log("tabular.delimit(obj, opts):\n", result, "\n");
 
-  var csv = tabular.delimit(customers);
-  console.log("csv", csv);
+  opts = {
+    dot: "/",
+    separator: '  ',
+    dateFormatter: function(date) {return date.toISOString().substr(0,10);},
+    sort: ["name", "address/state", "address/city", "-contacts"],
+    classes: {table: "table table-striped table-bordered"}
+  };
+
+  result = tabular.html(customers, opts);
+  console.log("tabular.html(customers, opts):\n", result, "\n");
+
+
 })();
