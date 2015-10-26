@@ -322,6 +322,12 @@
         }]);
         res.should.be.exactly('<table>\n\t<thead>\n\t\t<tr>\n\t\t\t<th>First Name</th>\n\t\t\t<th>Last Name</th>\n\t\t</tr>\n\t</thead>\n\t<tbody>\n\t\t<tr>\n\t\t\t<td>John</td>\n\t\t\t<td>Doe</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>Jane</td>\n\t\t\t<td>Doe</td>\n\t\t</tr>\n\t</tbody>\n</table>\n');
       });
+      it("should encode strings", function() {
+        var res = tabular.html({
+          cell: '<span>I\'m a span</span>'
+        });
+        res.should.be.exactly('<table>\n\t<thead>\n\t\t<tr>\n\t\t\t<th>cell</th>\n\t\t</tr>\n\t</thead>\n\t<tbody>\n\t\t<tr>\n\t\t\t<td>&lt;span&gt;I\'m a span&lt;/span&gt;</td>\n\t\t</tr>\n\t</tbody>\n</table>\n');
+      });
     });
   });
 
