@@ -1,5 +1,5 @@
 {
-  "name": "tabular",
+  "name": "tabular-json",
   "version": "0.1.0",
   "description": "Flatten complex JSON objects and convert to csv, tab delimited, or html",
   "main": "lib/tabular.js",
