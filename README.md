@@ -198,6 +198,7 @@ The variable `result` contains the string:
   - `separator` - String - Separates html elements. Defaults to `'\t'`.
   - `eol` - String - End of line string. Defaults to `'\n'`.
   - `escapeInnerHTML` - Boolean - Determines if values that contain HTML elements should be escaped so they would not be included in the DOM. Defaults to `true`.
+  - `convertLinks` - Boolean - Determines if values that look like web links should be converted to link anchors. Defaults to `false`.
   - `classes` - Object - Add class values by including the properties (all optional): {`table`, `thead`, `tr`, `th`, `tbody`, `td`}.
 
 #### html(obj, options) Example
